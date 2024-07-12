@@ -1,0 +1,28 @@
+<nav *ngIf="estaLogueado()" class="navbar navbar-expand-lg mt-2" style="background-color: #62B5D9;">
+    <!--4c6ca8-->
+    <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/" style="color: black;">
+            <img src="../../assets/images/Logo_Jackson.jpg" alt="Logo" width="45" height="36" class="d-inline-block align-text-top">
+            <b>&nbsp;&nbsp;Microsistema financiero</b>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav me-auto mb-2 mb-lg-0">
+                <a class="nav-link" style="color: black;" routerLink="/clientes">Clientes</a>
+                <a class="nav-link" style="color: black;" routerLink="/inmuebles">Inmuebles</a>
+                <a class="nav-link" style="color: black;" routerLink="/cotizaciones">Cotizaciones</a>
+                <a class="nav-link" style="color: black;" routerLink="/creditos">Créditos</a>
+            </div>
+            <div class="d-flex me-3">
+                <a class="nav-link me-3" style="color: black;" routerLink="/cat-general/1" title="Formas de pago"><i class="fas fa-money-check-alt"></i></a>
+                <a class="nav-link me-3" style="color: black;" routerLink="/usuarios" title="Usuarios">
+                    <i class="fas fa-users"></i>
+                    <span>&nbsp;{{nombreUsuario}}</span>
+                </a>
+                <a class="nav-link" style="color: black; cursor: pointer;" (click)="salir()" title="Salir"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,38 @@
+<div class="row mt-3 mb-3">
+    <div class="col-10">
+        <h3>
+            <a class="text-primary me-2" style="cursor: pointer;" routerLink="/clientes"><i class="fas fa-chevron-left"></i></a> Cliente ({{modoEdicion}})
+        </h3>
+    </div>
+    <div class="col-2 text-end">
+    </div>
+</div>
+<hr>
+<div class="row mt-2">
+    <div class="col-6">
+        <div class="card text-bg-light mt-2">
+            <div class="card-body">
+                <form [formGroup]="formCliente">
+                    <div class="mb-2">
+                        <label for="txtCliNom" class="form-label">Nombre (s)</label>
+                        <input type="text" class="form-control" id="txtCliNom" formControlName="vchNombre">
+                    </div>
+                    <div class="mb-2">
+                        <label for="txtCliApp" class="form-label">Apellido paterno</label>
+                        <input type="text" class="form-control" id="txtCliApp" formControlName="vchApellidoPaterno">
+                    </div>
+                    <div class="mb-2">
+                        <label for="txtCliApm" class="form-label">Apellido materno</label>
+                        <input type="text" class="form-control" id="txtCliApm" formControlName="vchApellidoMaterno">
+                    </div>
+                    <div class="mb-2">
+                        <label for="txaCliDom" class="form-label">Domicilio</label>
+                        <textarea class="form-control" id="txaCliDom" rows="3" formControlName="vchDomicilio"></textarea>
+                    </div>
+                </form>
+                <button class="btn btn-outline-primary" (click)="guardaCliente()">Guardar</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-6"></div>
+</div>

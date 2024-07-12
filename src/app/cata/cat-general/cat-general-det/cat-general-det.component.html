@@ -1,0 +1,60 @@
+<div class="row mt-3 mb-3">
+    <div class="col-10">
+        <h3 *ngIf="!mModoEdicion"><small>Agregar </small>{{catalogo.nombre}}</h3>
+        <h3 *ngIf="mModoEdicion"><small>Editar </small>{{catalogo.nombre}}</h3>
+    </div>
+</div>
+<hr>
+
+<div class="row">
+    <div class="col-8">
+        <form class="was-validated" (ngSubmit)="guardar()" [formGroup]="formGroup">
+            <div class="row g-3">
+                <div class="col-12">
+                    <label for="validationTextarea" class="form-label"><b>Descripción</b>  (máximo 30 caracteres)</label>
+                    <input class="form-control is-invalid" id="txtDescripcion" placeholder="Escriba aquí..." required formControlName="vchDescripcion" />
+                    <div class="invalid-feedback" *ngIf="(formGroup.get('vchDescripcion').touched || formGroup.get('vchDescripcion').dirty) && !formGroup.get('vchDescripcion').valid">
+                        <span *ngIf="formGroup.get('vchDescripcion').errors.required" class="text-info">
+              Capture una descripción
+            </span>
+                    </div>
+                </div>
+                <div class="col-12 mt-3">
+                    <div class="col-md-4 col-md-offset-2">
+                        <span>
+              <button class="btn btn-primary mr-2"
+                      id="btnGuardar"
+                      type="submit"
+                      [disabled]="!formGroup.valid">
+                Guardar
+              </button>&nbsp;&nbsp;
+              <button class="btn btn-secondary"
+                      (click)="navega()">
+                Regresar
+              </button>
+            </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal - Confirmación -->
+<div class="backdrop" [ngStyle]="{'display':display}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <!-- Inicio-->
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmación</h4>
+            </div>
+            <div class="modal-body">
+                <p>Registro guardado</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" (click)="navega()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>

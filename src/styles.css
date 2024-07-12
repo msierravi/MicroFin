@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+/* Pantalla gris con ventanas modal */
+
+.backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+}

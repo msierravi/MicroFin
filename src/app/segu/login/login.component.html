@@ -1,0 +1,90 @@
+<div class="backlogin">
+    <!--class="backlogin"-->
+    <div class="screen-center">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div class="card bg-app border-mdtc-azul">
+                    <!--<div class="card border-mdtc-azul" style="background-color: #848484; ">-->
+                    <div class="card-body">
+                        <div class="container text-center">
+                            <h5 class="mb-4 text-white">Microsistema financiero de Jacksonville</h5>
+                            <div class="row">
+                                <!--LOGO-->
+                                <div class="col-sm-6" style="border-right: 1px solid #042F7F; ">
+                                    <div class="d-flex align-items-center" style="height: 90%;">
+                                        <!--class="img-fluid" -->
+                                        <img src="../../../assets/images/Logo_Jackson.jpg" alt="JACKSONVILLE" loading="lazy" style="margin-top: -25px; margin-left: 25px; height:90%; width:75%;">
+                                    </div>
+                                    <div style="height: 10%;">
+                                        <span class="text-white">v1.0</span>
+                                    </div>
+                                </div>
+                                <!--CAMPOS-->
+                                <div class="col-sm-6">
+                                    <h4 class="text-white text-center">¡ Bienvenido !</h4>
+                                    <br />
+                                    <div *ngIf="formGroup">
+                                        <form class="form-horizontal" novalidate [formGroup]="formGroup">
+                                            <fieldset>
+                                                <!--Cuenta-->
+                                                <div class="form-group" [ngClass]="{'has-error': (formGroup.get('email').touched || formGroup.get('email').dirty) && !formGroup.get('email').valid }">
+                                                    <div class="col-md-11">
+                                                        <div class="input-group mb-3">
+
+                                                            <span class="input-group-text"><i class="fas fa-at" style="color:grey; vertical-align:bottom;"></i></span>
+
+                                                            <input class="form-control" id="emailId" type="email" required placeholder="Email" formControlName="email" />
+                                                        </div>
+                                                        <span class="text-danger" *ngIf="(formGroup.get('email').touched || formGroup.get('email').dirty) && !formGroup.get('email').valid">
+                                                          <span *ngIf="formGroup.get('email').errors.required">
+                                                            Requerido
+                                                          </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <!--Pass-->
+                                                <div class="form-group" [ngClass]="{'has-error': (formGroup.get('password').touched || formGroup.get('password').dirty) && !formGroup.get('password').valid }">
+                                                    <div class="col-md-11">
+                                                        <div class="input-group mb-3">
+
+                                                            <span class="input-group-text"><i class="fas fa-key" style="color:grey; vertical-align:bottom;"></i></span>
+
+                                                            <input class="form-control" id="passwordId" type="password" required (keyup.enter)="loguearse()" placeholder="Password" formControlName="password" />
+                                                        </div>
+                                                        <span class="text-danger" *ngIf="(formGroup.get('password').touched || formGroup.get('password').dirty) && !formGroup.get('password').valid">
+                                                          <span *ngIf="formGroup.get('password').errors.required">
+                                                            Requerido
+                                                          </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="errorExist" class="col-md-12" style="text-align:center">
+                                                    <span class="text-light" style="font-weight:500">
+                                                      {{errorMessage}}<br /><br />
+                                                    </span>
+                                                </div>
+                                                <div class="form-group" style="z-index:1;">
+                                                    <div class="col-md-12" style="text-align:center">
+                                                        <div style="text-align:center; position:relative; margin-left:45%; margin-right:55%;">
+                                                            <span class="spinner-border text-white" role="status" aria-hidden="true" [ngStyle]="{'display':dplaySpinner}"></span>
+                                                            <br />
+                                                        </div>
+                                                        <button class="btn btn-light" type="button" id="btnEntrar" (click)="loguearse()" [disabled]="!formGroup.valid">
+                                                          Entrar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+.bg-app {
+    /*azul rey*/
+    /*background-color: #0040FF;*/
+    /*azul-gris*/
+    background-color: #4c6ca8;
+}
+
+.bg-mdtc-azul {
+    background-color: #042F7F;
+}
+
+
+/* Centrado */
+
+.screen-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+
+.backlogin {
+    /*background-color: #5A5A5A; */
+    background-image: linear-gradient(to bottom, #61b5d9, #7ac6e2, #93d7eb, #ace7f4, #c6f8ff);
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+}

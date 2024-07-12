@@ -1,0 +1,217 @@
+<div class="row mt-3 mb-3">
+    <div class="col-4">
+        <h3>Créditos</h3>
+    </div>
+    <div class="col-4">
+        <small><b>Cliente</b></small>
+        <select class="form-select" id="selClienteId" name="clienteId" [(ngModel)]=filClienteId (change)="dameCreditos()">
+                <option value="0">Todos...</option>
+                <option *ngFor="let regCli of mdlClientesCat" [ngValue]="regCli.id">
+                  {{regCli.vchNombre}} {{regCli.vchApellidoPaterno}} {{regCli.vchApellidoMaterno}} 
+                </option>                      
+        </select>
+    </div>
+    <div class="col-4">
+        <small><b>Inmueble</b></small>
+        <select class="form-select" id="selInmuebleId" name="inmuebleId" [(ngModel)]=filInmuebleId (change)="dameCreditos()">
+            <option value="0">Todos...</option>
+            <option *ngFor="let regInm of mdlInmueblesCat" [ngValue]="regInm.id">
+              {{regInm.vchInmueble}} 
+            </option>          
+        </select>
+    </div>
+</div>
+<hr>
+<div class="row mt-2">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header text-end">
+                <h6><span class="badge text-bg-secondary">{{totReg}}</span></h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th width="4%"></th>
+                                <th width="4%"></th>
+                                <th width="8%" class="text-center">No. Crédito</th>
+                                <th width="25%">Cliente</th>
+                                <th width="25%">Inmueble</th>
+                                <th width="12%" class="text-center">Monto de crédito</th>
+                                <th width="12%" class="text-center">Mensualidad</th>
+                                <th width="14%">Estatus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let regCre of mdlCreditosQry">
+                                <td width="4%">
+                                    <a class="text-primary" (click)="abreAmortiza(regCre.id, regCre.vchCliente, regCre.vchInmueble)" style="cursor: pointer;"><i class="far fa-list-alt"></i></a>
+                                </td>
+                                <td width="4%">
+                                    <a class="text-danger" (click)="downloadFile(1, regCre.id)" style="cursor: pointer;"><i class="fas fa-file-download"></i></a>
+                                </td>
+                                <td width="8%" class="text-center">{{regCre.vchNumeroCredito}}</td>
+                                <td width="25%">{{regCre.vchCliente}}</td>
+                                <td width="25%">{{regCre.vchInmueble}}</td>
+                                <td width="12%" class="text-end">{{regCre.numCredito | number:'1.2-2'}}</td>
+                                <td width="12%" class="text-end">{{regCre.numMensualidad | number:'1.2-2'}}</td>
+                                <td width="14%">
+                                    <span class="me-2">{{regCre.vchEstatus}}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Tabla de amortización-->
+<div class="backdrop" [ngStyle]="{'display':dplayTablaAmort}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':dplayTablaAmort}">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Tabla de amortización - <small>{{strCliente}} ({{strInmueble}})</small></h6>
+                <button type="button" class="btn-close" aria-label="Close" (click)="cierraAmortiza()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="position-relative">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover table-sm" style="font-size: small;">
+                            <thead class="table-light">
+                                <tr>
+                                    <th width="6%" class="text-center">Número</th>
+                                    <th width="12%" class="text-center">Fecha de pago</th>
+                                    <th width="10%" class="text-end">Saldo insoluto</th>
+                                    <th width="10%" class="text-end">Capital</th>
+                                    <th width="10%" class="text-end">Interés</th>
+                                    <th width="10%" class="text-end">Mensualidad</th>
+                                    <th width="10%" class="text-center">IVA</th>
+                                    <th width="10%" class="text-end">Mensualidad total</th>
+                                    <th width="10%" class="text-end">Adeudo</th>
+                                    <th width="12%" class="text-center">Estatus</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let regAmo of mdlAmortizaCred">
+                                    <td width="6%" class="text-center">{{regAmo.intNumeroPago}}</td>
+                                    <td width="12%" class="text-center">{{regAmo.datFecLimPago | date:'dd-MM-yyyy'}}</td>
+                                    <td width="10%" class="text-end">{{regAmo.numSaldoInsoluto | number:'1.2-2'}}</td>
+                                    <td width="10%" class="text-end">{{regAmo.numCapital | number:'1.2-2'}}</td>
+                                    <td width="10%" class="text-end">{{regAmo.numInteres | number:'1.2-2'}}</td>
+                                    <td width="10%" class="text-end">{{regAmo.numMensualidad | number:'1.2-2'}}</td>
+                                    <td width="10%" class="text-end">{{regAmo.numIVA | number:'1.2-2'}}</td>
+                                    <td width="10%" class="text-end">{{regAmo.numMensualidadTotal | number:'1.2-2'}}</td>
+                                    <td width="10%" class="text-end table-secondary">{{regAmo.numSaldoMensTotal | number:'1.2-2'}}</td>
+                                    <td width="12%" class="text-end">
+                                        <span *ngIf="regAmo.intEstatusMensId==1" class="badge text-bg-warning">{{regAmo.vchEstatus}}</span>
+                                        <span *ngIf="regAmo.intEstatusMensId==2" class="badge text-bg-success">{{regAmo.vchEstatus}}</span>
+                                        <span *ngIf="regAmo.intEstatusMensId==3" class="badge text-bg-danger">{{regAmo.vchEstatus}}</span>
+                                        <span class="ms-2 text-white" title="Consulta pagos">
+                                            <button class="btn btn-outline-info btn-sm" style="cursor: pointer;" (click)="abreConsPagos(regAmo.id)"><i class="fas fa-dollar-sign"></i></button>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" (click)="abrePago()">Pagar</button>
+                <button type="button" class="btn btn-secondary" (click)="cierraAmortiza()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Aplica pago-->
+<div class="backdrop" [ngStyle]="{'display':dplayPago}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':dplayPago}">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-primary">
+            <div class="modal-header">
+                <h6 class="modal-title">Aplicación de pagos
+                    <p><small>{{strCliente}} ({{strInmueble}})</small></p>
+                </h6>
+                <button type="button" class="btn-close" aria-label="Close" (click)="cierraPago()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card border-primary">
+                    <div class="card-body">
+                        <form [formGroup]="formPago">
+                            <div class="mb-2">
+                                <label for="selFpa" class="form-label"><b>Forma de pago</b></label>
+                                <select class="form-select" id="selFpa" name="formaPagoId" [(ngModel)]=filFormaPagoId (change)="dameSaldoFavor()" formControlName="intFormaPagoId">
+                                    <!-- <option value="-1">[ Seleccione ]</option> -->
+                                    <option *ngFor="let regFpa of mdlCatFormaPago" [ngValue]="regFpa.id">
+                                      {{regFpa.vchFormaPago}} 
+                                    </option>          
+                                </select>
+                            </div>
+                            <div class="mb-2 col-5">
+                                <label for="txtFpa" class="form-label"><b>Importe pagado</b></label>
+                                <input type="text" class="form-control form-control-sm text-end" id="txtFpa" (focus)="$event.target.select()" (change)="changeFormatDec(formPago.get('numMontoPago'))" formControlName="numMontoPago" [attr.disabled]="desactivaControl">
+                            </div>
+                            <div class="mb-2 col-5">
+                                <label for="datFpa" class="form-label"><b>Fecha de pago</b></label>
+                                <input type="date" class="form-control form-control-sm text-center" id="datFpa" formControlName="datFecPago">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="aplicaPago()">Aplicar</button>
+                <button type="button" class="btn btn-danger" (click)="cierraPago()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Consulta pagos-->
+<div class="backdrop" [ngStyle]="{'display':dplayConsPago}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':dplayConsPago}">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-primary">
+            <div class="modal-header">
+                <h6 class="modal-title">Pagos aplicados - Amortización {{strNumeroAmortiza}}</h6>
+                <button type="button" class="btn-close" aria-label="Close" (click)="cierraConsPagos()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-sm" style="font-size: small;">
+                        <thead class="table-light">
+                            <tr>
+                                <th width="4%"></th>
+                                <th width="10%" class="text-center">Id</th>
+                                <th width="20%">Forma de pago</th>
+                                <th width="20%" class="text-end">Monto pagado</th>
+                                <th width="20%" class="text-center">Fecha de pago</th>
+                                <th width="30%">Fecha de registro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let regPag of mdlPagos">
+                                <td width="4%">
+                                    <a class="text-danger" (click)="downloadFile(2, regPag.id)" style="cursor: pointer;"><i class="fas fa-file-download"></i></a>
+                                </td>
+                                <td width="10%">{{regPag.id}}</td>
+                                <td width="20%">{{regPag.vchFormaPago}}</td>
+                                <td width="20%" class="text-end">{{regPag.numMontoPago | number:'1.2-2'}}</td>
+                                <td width="20%" class="text-center">{{regPag.datFecPago | date:'dd-MM-yyyy'}}</td>
+                                <td width="30%">{{regPag.datFecRegPago}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cierraConsPagos()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

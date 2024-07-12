@@ -1,0 +1,70 @@
+<!-- CABECERO -->
+<div class="row mt-3 mb-3">
+    <div class="col-10">
+        <h3>{{catalogo.nombre}}</h3>
+    </div>
+    <div class="col-2 text-end">
+        <button type="button" class="btn btn-outline-secondary" (click)="nuevoRegistro()">Agregar&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+    </div>
+</div>
+<hr>
+
+<h4 *ngIf="mSinRegistros"><span class="label text-danger">No existen registros para mostrar</span></h4>
+<div *ngIf="mCargaDatos" class="progress" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar progress-bar-striped bg-danger progress-bar-animated" style="width: 100%;">Obteniendo datos ...</div>
+</div>
+
+<div *ngIf="!mSinRegistros" class="card">
+    <div class="card-body">
+        <table class="table" *ngIf="mdlCatGeneral && mdlCatGeneral.length">
+            <thead>
+                <tr>
+                    <th *ngIf="!catalogo.esFijo" style="width: 5%"></th>
+                    <th *ngIf="!catalogo.esFijo" style="width: 5%"></th>
+                    <th style="width: 90%">Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let catGeneralReg of mdlCatGeneral">
+                    <td *ngIf="!catalogo.esFijo" style="width: 5%">
+                        <div>
+                            <span *ngIf="catGeneralReg.id !== 0" class="text-primary">
+                                <a role="button" (click)="editaRegistro(catGeneralReg.id)"><i class="fas fa-pencil-alt"></i></a>
+                            </span>
+                            <span *ngIf="catGeneralReg.id === 0" class="text-secondary"><i class="fas fa-ban"></i></span>
+                        </div>
+                    </td>
+                    <td *ngIf="!catalogo.esFijo" style="width: 5%">
+                        <div>
+                            <span *ngIf="catGeneralReg.id !== 0" class="text-danger">
+                                <a role="button" (click)="confirmaElimina(catGeneralReg)"><i class="fas fa-eraser"></i></a>
+                            </span>
+                            <span *ngIf="catGeneralReg.id === 0" class="text-secondary"><i class="fas fa-ban"></i></span>
+                        </div>
+                    </td>
+                    <td style="width: 90%"> {{catGeneralReg.vchDescripcion}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="backdrop" [ngStyle]="{'display':dplayElimina}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':dplayElimina}">
+    <div class="modal-dialog modal-sm" role="document">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmar</h4>
+            </div>
+            <div class="modal-body">
+                <p>¿ Desea eliminar el registro de:<br /><b>{{msjEliminaCatGeneral}}</b>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary mr-2" (click)="eliminaRegistro()">Si</button>
+                <button type="button" class="btn btn-outline-danger" (click)="cierraElimina()">No</button>
+            </div>
+        </div>
+    </div>
+</div>

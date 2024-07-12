@@ -1,0 +1,135 @@
+<div class="row mt-3 mb-3">
+    <div class="col-10">
+        <h3>
+            <a class="text-primary me-2" style="cursor: pointer;" routerLink="/cotizaciones"><i class="fas fa-chevron-left"></i></a> Cotización ({{modoEdicion}})
+        </h3>
+    </div>
+    <div class="col-2 text-end">
+    </div>
+</div>
+<hr>
+<div class="row mt-2">
+    <div class="col-3">
+        <div class="card text-bg-light mt-2">
+            <div class="card-header">
+                <h5>Cotizar</h5>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="formCotiza">
+                    <div class="mb-2">
+                        <label for="selInm" class="form-label"><b>Inmueble</b></label>
+                        <select class="form-select" id="selInmuebleId" name="inmuebleId" [(ngModel)]=filInmuebleId (change)="dameValorVenta()" formControlName="intInmuebleId" [attr.disabled]="desactivaControl">
+                            <option value="0">Todos...</option>
+                            <option *ngFor="let regInm of mdlInmueblesCat" [ngValue]="regInm.id">
+                              {{regInm.vchInmueble}} 
+                            </option>          
+                        </select>
+                        <p>
+                            <small>Precio:</small>
+                            <input class="form-control form-control-sm text-end" type="text" formControlName="numMontoVenta" disabled>
+                        </p>
+                    </div>
+                    <div class="mb-2">
+                        <label for="txtEng" class="form-label"><b>% Enganche</b></label>
+                        <input type="text" class="form-control form-control-sm text-end" id="txtEng" (focus)="$event.target.select()" (change)="changeFormatDec(formCotiza.get('numPorcEnganche'))" (blur)="obtieneEnganche()" formControlName="numPorcEnganche" [attr.disabled]="desactivaControl">
+                        <p>
+                            <small>Monto:</small>
+                            <input class="form-control form-control-sm text-end" type="text" formControlName="numMontoEnganche" disabled>
+                        </p>
+                    </div>
+                    <div class="mb-2 col-5">
+                        <label for="txtPla" class="form-label"><b>Plazo en meses</b></label>
+                        <input type="text" class="form-control form-control-sm text-center" id="txtPla" (focus)="$event.target.select()" formControlName="intPlazo" [attr.disabled]="desactivaControl">
+                    </div>
+                    <div class="mb-2 col-8">
+                        <label for="txtIntAnu" class="form-label"><b>Tasa de interés anual</b></label>
+                        <input type="text" class="form-control form-control-sm text-end" id="txtIntAnu" (focus)="$event.target.select()" (change)="changeFormatDec(formCotiza.get('numTasaInteres'), 6)" formControlName="numTasaInteres" [attr.disabled]="desactivaControl">
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-outline-success" (click)="calculaCotiza()" [attr.disabled]="disBtnCalcular">Calcular</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="card text-bg-light mt-2">
+            <div class="card-header">
+                <h5>Tabla de amortización</h5>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="formCotizaCredito">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-1 text-end">
+                            <label for="txtCre" class="col-form-label">Crédito</label>
+                        </div>
+                        <div class="col-2">
+                            <input type="text" id="txtCre" class="form-control form-control-sm text-end" formControlName="numCredito" disabled>
+                        </div>
+                        <div class="col-2 text-end">
+                            <label for="txtMens" class="col-form-label">Mens s/IVA</label>
+                        </div>
+                        <div class="col-2">
+                            <input type="text" id="txtMens" class="form-control form-control-sm text-end" formControlName="numMensualidad" disabled>
+                        </div>
+                        <div class="col-5">
+                            <button class="btn btn-outline-info me-1" (click)="guardaCotizacion()" [attr.disabled]="disBtnGuardar">Guardar&nbsp;&nbsp;<i class="far fa-save"></i></button>
+                            <button class="btn btn-outline-primary me-1" (click)="formalizaCredito()" [attr.disabled]="disBtnFormal">Formalizar&nbsp;&nbsp;<i class="fas fa-signature"></i></button>
+                            <button class="btn btn-outline-dark" (click)="limpiaCotizacion()" [attr.disabled]="disBtnLimpiar">Limpiar&nbsp;&nbsp;<i class="fas fa-sync-alt"></i></button>
+                        </div>
+                    </div>
+                </form>
+                <div *ngIf="activaFormaliza" class="row mt-2">
+                    <div class="col-12">
+                        <div class="card border-primary mb-3">
+                            <div class="card-body text-primary">
+                                <h6 class="card-title">Seleccione un cliente para formalizar el crédito</h6>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <select class="form-select" id="selClienteId" name="clienteId" [(ngModel)]=filClienteId>
+                                            <option value="0">[ Clientes ]</option>                                        
+                                            <option *ngFor="let regCli of mdlClientesCat" [ngValue]="regCli.id">
+                                                {{regCli.vchNombre}} {{regCli.vchApellidoPaterno}} {{regCli.vchApellidoMaterno}} 
+                                            </option>          
+                                        </select>
+                                    </div>
+                                    <div class="col-3 ms-2">
+                                        <button class="btn btn-primary" (click)="confirmaFormaliza()">Confirmar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <!--Tabla de amortizacion-->
+                <div class="table-responsive-sm">
+                    <table class="table table-striped table-hover table-sm" style="font-size: small;">
+                        <thead class="table-light">
+                            <tr>
+                                <th width="10%" class="text-center">Número</th>
+                                <th width="15%" class="text-end">Saldo insoluto</th>
+                                <th width="15%" class="text-end">Capital</th>
+                                <th width="15%" class="text-end">Interés</th>
+                                <th width="15%" class="text-end">Mensualidad</th>
+                                <th width="15%" class="text-center">IVA</th>
+                                <th width="15%" class="text-end">Mensualidad total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let regAmo of mdlTablaAmortiza">
+                                <td width="10%" class="text-center">{{regAmo.intNumeroPago}}</td>
+                                <td width="15%" class="text-end">{{regAmo.numSaldoInsoluto | number:'1.2-2'}}</td>
+                                <td width="15%" class="text-end">{{regAmo.numCapital | number:'1.2-2'}}</td>
+                                <td width="15%" class="text-end">{{regAmo.numInteres | number:'1.2-2'}}</td>
+                                <td width="15%" class="text-end">{{regAmo.numMensualidad | number:'1.2-2'}}</td>
+                                <td width="15%" class="text-end">{{regAmo.numIVA | number:'1.2-2'}}</td>
+                                <td width="15%" class="text-end">{{regAmo.numMensualidadTotal | number:'1.2-2'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

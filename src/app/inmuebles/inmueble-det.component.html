@@ -1,0 +1,73 @@
+<div class="row mt-3 mb-3">
+    <div class="col-10">
+        <h3>
+            <a class="text-primary me-2" style="cursor: pointer;" routerLink="/inmuebles"><i class="fas fa-chevron-left"></i></a> Inmueble ({{modoEdicion}})
+        </h3>
+    </div>
+    <div class="col-2 text-end">
+    </div>
+</div>
+<hr>
+<div class="row mt-2">
+    <div class="col-12">
+        <div class="card text-bg-light mt-2">
+            <div class="card-body">
+                <form [formGroup]="formInmueble">
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="mb-2">
+                                <label for="txtInmNom" class="form-label">Nombre del inmueble</label>
+                                <input type="text" class="form-control" id="txtInmNom" formControlName="vchInmueble">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-2">
+                                <label for="txtMonVen" class="form-label">Precio de venta</label>
+                                <input type="text" class="form-control text-end" id="txtMonVen" (focus)="$event.target.select()" (change)="changeFormatDec(formInmueble.get('numValorVenta'))" formControlName="numValorVenta">
+                            </div>
+                        </div>
+                        <span class="mt-2 mb-2"><b>Ubicación</b></span>
+                        <div class="col-6">
+                            <div class="mb-2">
+                                <label for="txtDomCal" class="form-label">Calle</label>
+                                <input type="text" class="form-control" id="txtDomCal" formControlName="vchDomCalle">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-2">
+                                <label for="txtDomNum" class="form-label">Número</label>
+                                <input type="text" class="form-control" id="txtDomNum" formControlName="vchDomNumero">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-2">
+                                <label for="txtDomCol" class="form-label">Colonia</label>
+                                <input type="text" class="form-control" id="txtDomCol" formControlName="vchDomColonia">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-2">
+                                <label for="txtDomLoc" class="form-label">Localidad</label>
+                                <input type="text" class="form-control" id="txtDomLoc" formControlName="vchDomLocalidad">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-2">
+                                <label for="txtDomAlMu" class="form-label">Alcaldía / Municipio</label>
+                                <input type="text" class="form-control" id="txtDomAlMu" formControlName="vchDomAlcaMun">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-2">
+                                <label for="txtDomCP" class="form-label">Código postal</label>
+                                <input type="text" class="form-control" id="txtDomCP" formControlName="vchCodigoPostal">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <button class="btn btn-outline-primary" (click)="guardaInmueble()">Guardar</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-6"></div>
+</div>

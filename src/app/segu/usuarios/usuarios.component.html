@@ -1,0 +1,33 @@
+<div class="row mt-3 mb-3">
+    <div class="col-10">
+        <h3>Usuarios</h3>
+    </div>
+</div>
+<hr>
+<div class="row mt-2">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header text-end">
+                <h6><span class="badge text-bg-secondary">{{totReg}}</span></h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th width="50%">Nombre de usuario</th>
+                                <th width="50%">Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let regUsu of mdlUsuarios">
+                                <td width="50%">{{regUsu.vchUsuario}}</td>
+                                <td width="50%">{{regUsu.vchEmail}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

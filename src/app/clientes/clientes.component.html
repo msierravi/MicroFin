@@ -1,0 +1,46 @@
+<div class="row mt-3 mb-3">
+    <div class="col-10">
+        <h3>Clientes</h3>
+    </div>
+    <div class="col-2 text-end">
+        <button type="button" class="btn btn-outline-secondary" (click)="nuevoCliente()">Agregar&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+    </div>
+</div>
+<hr>
+<div class="row mt-2">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header text-end">
+                <h6><span class="badge text-bg-secondary">{{totReg}}</span></h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th width="5%"></th>
+                                <th width="5%"></th>
+                                <th width="30%">Apellido paterno</th>
+                                <th width="30%">Apellido materno</th>
+                                <th width="30%">Apellido nombre (s)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let regCli of mdlClientes">
+                                <td width="5%">
+                                    <a class="text-primary" (click)="editaCliente(regCli.id)" style="cursor: pointer;"><i class="fas fa-pencil-alt"></i></a>
+                                </td>
+                                <td width="5%">
+                                    <a class="text-danger" (click)="eliminaCliente(regCli.id)" style="cursor: pointer;"><i class="fas fa-eraser"></i></a>
+                                </td>
+                                <td width="30%">{{regCli.vchNombre}}</td>
+                                <td width="30%">{{regCli.vchApellidoPaterno}}</td>
+                                <td width="30%">{{regCli.vchApellidoMaterno}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
